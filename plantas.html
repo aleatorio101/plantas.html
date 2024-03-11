@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animando Flores</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: black;
+        overflow: hidden; /* Impede que as flores criem barras de rolagem */
+    }
+
+    svg {
+        position: absolute;
+        bottom: 0;
+        animation: grow 5s linear infinite;
+    }
+
+    @keyframes grow {
+        0% {
+            transform: translateY(100%);
+        }
+        100% {
+            transform: translateY(0%);
+        }
+    }
+</style>
+</head>
+<body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Cria novas flores a cada 2 segundos
+        setInterval(createFlower, 2000);
+
+        function createFlower() {
+            // Clona o elemento SVG da flor
+            var svgClone = document.querySelector("svg").cloneNode(true);
+
+            // Define uma posição aleatória na tela
+            var xPos = Math.random() * window.innerWidth;
+            svgClone.style.left = xPos + "px";
+
+            // Adiciona o clone ao corpo do documento
+            document.body.appendChild(svgClone);
+
+            // Remove o clone do documento quando a animação terminar
+            svgClone.addEventListener("animationend", function() {
+                svgClone.remove();
+            });
+        }
+    });
+</script>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+    <!-- Caule da flor -->
+    <path fill="green" d="M50,100L50,50"/>
+
+    <!-- Pétalas da flor -->
+    <circle fill="pink" cx="50" cy="40" r="10"/>
+    <circle fill="pink" cx="50" cy="20" r="10"/>
+    <circle fill="pink" cx="70" cy="30" r="10"/>
+    <circle fill="pink" cx="30" cy="30" r="10"/>
+
+    <!-- Centro da flor -->
+    <circle fill="yellow" cx="50" cy="30" r="5"/>
+</svg>
+
+</body>
+</html>
